@@ -1,21 +1,24 @@
 from pynytimes import NYTAPI
 import smtplib
 from email.message import EmailMessage
+import os
 
 nyt = NYTAPI("uLxzNzkw1Y40BYcrOId3oeBzktuk1GOy", parse_dates=True)
 
-EMAIL_ADDRESS = 'boyohboy333333333@gmail.com'
-EMAIL_PASSWORD = 'vkecdlpxfyeohnvk'
+EMAIL_ADDRESS = os.environ('EMAIL')
+EMAIL_PASSWORD = os.environ('EMAIL_APP_PASSWORD')
 
 # Get fiction best sellers list
 books = nyt.best_sellers_list(
     name="Childrens Middle Grade Hardcover"
 )
 
+recipients = [EMAIL_ADDRESS, 'foo@bar.com']
+
 msg = EmailMessage()
 msg['Subject'] = 'New York Times Bestsellers'
 msg['From'] = EMAIL_ADDRESS
-msg['To'] = 'ogogogogoggogogogogogogogso@gmail.com'
+msg['To'] = ','.join(recipients)
 
 books_list = []
 
